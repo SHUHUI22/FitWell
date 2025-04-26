@@ -14,3 +14,19 @@ leftSide.addEventListener('mouseleave', () => {
     message.style.opacity = '0';
     message.style.transform = 'translateX(-50px)';
 });
+
+// Password toggle
+const togglePasswords = document.querySelectorAll('.togglePassword');
+
+togglePasswords.forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+        const inputField = this.previousElementSibling; // The input field is always the previous sibling to the icon
+        const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputField.setAttribute('type', type);
+        
+        // Toggle the eye icon
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
+});

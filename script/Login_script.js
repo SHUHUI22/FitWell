@@ -16,18 +16,19 @@ leftSide.addEventListener('mouseleave', () => {
 });
 
 // Password toggle
-const togglePassword = document.querySelector('#togglePassword');
-const password = document.querySelector('#password');
+const togglePasswords = document.querySelectorAll('.togglePassword');
 
-togglePassword.addEventListener('click', function () {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    
-    // toggle the eye icon
-    const icon = this.querySelector('i');
-    icon.classList.toggle('fa-eye');
-    icon.classList.toggle('fa-eye-slash');
+togglePasswords.forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+        const inputField = this.previousElementSibling; // The input field is always the previous sibling to the icon
+        const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputField.setAttribute('type', type);
+        
+        // Toggle the eye icon
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
 });
 
 // Login 

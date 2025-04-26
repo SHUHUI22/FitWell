@@ -120,7 +120,7 @@ select.placeholder_select:invalid {
     max-height: 36px;
 }
 
-#togglePassword{
+.togglePassword{
     cursor: pointer;
     border: none;
 }
