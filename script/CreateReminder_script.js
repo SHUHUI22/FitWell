@@ -1,49 +1,61 @@
+function showTab(tabId) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => {
+      content.classList.remove('active');
+    });
+    
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show the selected tab content
+    document.getElementById(tabId).classList.add('active');
+    
+    // Add active class to the clicked tab
+    event.currentTarget.classList.add('active');
+  }
 
-
-    // Wait until the page is fully loaded before running JavaScript
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get references to the tab elements
-        const tabButtons = document.querySelectorAll('.tab');
+  // Category selection - improved for better visual feedback
+  document.addEventListener('DOMContentLoaded', function() {
+    const categoryOptions = document.querySelectorAll('.category-option');
+    const radioButtons = document.querySelectorAll('input[type="radio"][name="category"]');
+    
+    // Handle clicks on the category options
+    categoryOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        // Get the radio button inside this option
+        const radio = this.querySelector('input[type="radio"]');
         
-        // Add click event listeners to tabs
-        tabButtons.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                // Remove active class from all tabs
-                tabButtons.forEach(function(t) {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to the clicked tab
-                tab.classList.add('active');
-                
-                // In a real app, you would show/hide content based on tab here
-            });
-        });
-
-        // Get reference to the form element
-        const form = document.getElementById('reminderForm');
+        // Check the radio button
+        radio.checked = true;
         
-        // Add submit event listener to the form
+        // Update visual selection (remove from all, add to this one)
+        updateSelection();
+      });
+    
+    // Initialize selection state
+    updateSelection();
+  });
+    const form = document.getElementById('reminderForm');
+    if (form) {
         form.addEventListener('submit', function(event) {
-            // Prevent the form from actually submitting (which would refresh the page)
             event.preventDefault();
-            
-            // Get all the form values
+
             const title = document.getElementById('title').value;
             const category = document.getElementById('category').value;
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
-            
-            // Simple form validation
+
             if (!title || !category || !date || !time) {
                 alert('Please fill in all required fields');
                 return;
             }
-            
-            // Show success message (in a real app, you would save data here)
+
             alert('Reminder saved successfully!');
-            
-            // Reset the form to clear all fields
             form.reset();
         });
-    });
+    }
+});
