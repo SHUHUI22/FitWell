@@ -1,0 +1,279 @@
+* {
+    font-family: Calibri;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 68px;
+}
+
+body{
+    width: 100%;
+}
+
+nav{
+    position: fixed !important; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: #efe3c3;
+}
+
+.dropdown-menu{
+    background-color: #efe3c3 !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:active{
+    color: #3E7B27 !important; 
+    background-color: rgba(62, 123, 39, 0.1) !important;
+}
+
+.web_name{
+    color: #3E7B27 !important; 
+    font-weight: bold;
+}
+
+.nav-link, .dropdown-item{
+    color: #123524 !important; 
+}
+
+.nav-link:hover,
+.nav-link.active
+{
+    color: #3E7B27 !important; 
+}
+
+#nav_profile .fas{
+    font-size: 1.7rem;
+}
+
+main{
+    padding-top: 68px;
+    padding-bottom: 68px;
+    background-color: #E4EFE7;
+}
+
+.welcomeUser{
+    padding: 50px;
+    padding-top: 30px;
+    padding-bottom: 0px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.container-header {
+    padding: 0 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.streak-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: 15px;;
+}
+
+.streak-ring {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.streak-bg,
+.streak-progress {
+    fill: none;
+    stroke-width: 10;
+}
+
+.streak-bg {
+    stroke: #123524;
+}
+
+.streak-progress {
+    stroke: #99BC85;
+    stroke-linecap: round;
+    stroke-dasharray: 565;
+    stroke-dashoffset: 565;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.streak-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.streak-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.streak-days {
+    text-align: center;
+    margin: -30px 0 0 0;
+    padding-left: 20px;;
+}
+
+#noDays {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #123524;
+}
+
+#days {
+    font-size: 2.5rem;
+    letter-spacing: 1rem;
+    font-style: italic;
+    color: #123524;
+}
+
+.info {
+    color: #123524;
+    text-align: center;
+}
+
+#info-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#info-value {
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+
+.bmi {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #123524;
+}
+
+#bmi-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #3E7B27;
+}
+
+#bmi-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #123524;
+}
+
+.bmi-bar {
+    height: 20px;
+    border-radius: 10px;
+    background: linear-gradient(
+  to right,
+  #B5D4F1,
+  #81E5DB,
+  #E8D284,
+  #E2798E
+);
+
+  }
+  
+
+footer{
+    background-color: #123524;
+    color: white;
+}
+
+footer h4{
+    font-weight: bold;
+}
+
+footer a{
+    color: #04AA6D;
+    text-decoration: none;
+}
+
+footer a:hover{
+    color: #3E7B27;
+}
+
+footer img{
+    width: 40px;
+    height: 40px;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 2000px){
+    #quick_link, #contact{
+        padding-left: 100px;
+        text-wrap: nowrap;
+    }
+}
+
+@media (max-width: 1020px) {
+    #home h1 {
+        font-size: 3.6rem;
+        padding: 90px 80px;
+    }
+
+    #home p {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 750px) {
+    #home h1 {
+        font-size: 3.4rem;
+        padding: 80px 80px;
+    }
+
+    #home p {
+        font-size: 1.25rem;
+    }
+
+    #quick_link{
+        padding-left: 30px;
+    }
+
+    #contact{
+        padding-left: 5px;
+    }
+
+}
+
+@media (max-width: 650px) {
+    #home h1 {
+        font-size: 2.5rem;
+        padding: 70px 45px;
+    }
+
+    #home p {
+        font-size: 1.25rem;
+        padding: 0 45px;
+    }
+
+    #btn_get_started{
+        margin-left: 45px;
+        position: absolute;
+        bottom: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        scroll-padding-top: 227px;
+    }
+    
+    #quick_link{
+        padding-left: 5px;
+    }
+
+    #contact h4{
+        padding-top: 10px;
+    }
+}
