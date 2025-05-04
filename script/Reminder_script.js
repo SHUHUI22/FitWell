@@ -1,118 +1,63 @@
 function showTab(tabId, event) {
-  // Hide all tab contents
-  const tabContents = document.querySelectorAll('.tab-content');
-  tabContents.forEach(content => {
-      content.classList.remove('active');
-  });
-
-  // Remove active class from all tabs
-  const tabs = document.querySelectorAll('.tab');
-  tabs.forEach(tab => {
-      tab.classList.remove('active');
-  });
-
-  // Show the selected tab content
-  document.getElementById(tabId).classList.add('active');
-
-  // Add active class to the clicked tab
-  if (event && event.currentTarget) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => content.classList.remove('active'));
+  
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+  
+    // Show selected tab content
+    document.getElementById(tabId).classList.add('active');
+  
+    // Add active class to the clicked tab
+    if (event && event.currentTarget) {
       event.currentTarget.classList.add('active');
-  }
+    }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const remindersList = document.querySelector('#reminder-list');
+    const emptyState = document.querySelector('#empty-state'); // Empty state element
 
-document.addEventListener('DOMContentLoaded', function () {
-  const categoryOptions = document.querySelectorAll('.category-option');
-  const form = document.getElementById('reminderForm');
-  const reminderList = document.getElementById('reminder-list');
-  const emptyState = document.getElementById('empty-state');
-  const toggleButton = document.getElementById('toggle-demo');
-  const tabs = document.querySelectorAll('.tab');
+    // Function to update the visibility of the empty-state and the reminder list
+    function updateEmptyState() {
+        if (remindersList.querySelectorAll('.reminder-item').length === 0){
+            emptyState.style.display = 'block';  // Show empty state when no reminders
+            remindersList.style.display = 'none'; // Hide the list of reminders
+        } else {
+            emptyState.style.display = 'none';  // Hide empty state
+            remindersList.style.display = 'block'; // Show the list of reminders
+        }
+    }
 
-  let hasReminders = false;
+    // Ensure the empty state is correctly updated on page load
+    updateEmptyState();
 
-  // Toggle between empty and filled states
-  function toggleView() {
-      hasReminders = !hasReminders;
-      emptyState.style.display = hasReminders ? 'none' : 'block';
-      reminderList.style.display = hasReminders ? 'block' : 'none';
-  }
+    // Event delegation for edit and delete actions
+    remindersList.addEventListener('click', function(event) {
+        const target = event.target;
 
-  // Handle category option selection
-  function updateSelection() {
-      categoryOptions.forEach(option => {
-          const radio = option.querySelector('input[type="radio"]');
-          if (radio.checked) {
-              option.classList.add('selected');
-          } else {
-              option.classList.remove('selected');
-          }
-      });
-  }
+        // Delete button clicked
+        if (target.closest('.delete-btn')) {
+            deleteReminder(target.closest('.reminder-item'));
+        }
 
-  categoryOptions.forEach(option => {
-      option.addEventListener('click', function () {
-          const radio = this.querySelector('input[type="radio"]');
-          radio.checked = true;
-          updateSelection();
-      });
-  });
+        // Edit button clicked
+        else if (target.closest('.edit-btn')) {
+            editReminder(target.closest('.reminder-item'));
+        }
+    });
 
-  updateSelection(); // On load
+    // Function to delete a reminder
+    function deleteReminder(reminderItem) {
+        reminderItem.remove(); // Remove the reminder item from the list
+        updateEmptyState(); // Re-check if the list is empty after deletion
+    }
 
-  // Handle form submission
-  if (form) {
-      form.addEventListener('submit', function (event) {
-          event.preventDefault();
-
-          const title = document.getElementById('title').value.trim();
-          const categoryInput = document.querySelector('input[name="category"]:checked');
-          const category = categoryInput ? categoryInput.value : '';
-          const date = document.getElementById('date').value;
-          const time = document.getElementById('time').value;
-
-          if (!title || !category || !date || !time) {
-              alert('Please fill in all required fields');
-              return;
-          }
-
-          // Create a new reminder element
-          const newItem = document.createElement('div');
-          newItem.classList.add('reminder-item');
-          newItem.innerHTML = `
-              <div class="reminder-title">${title}</div>
-              <div class="reminder-details">
-                  <div class="reminder-category ${category.toLowerCase()}">${category}</div>
-                  <div class="reminder-date-time">${date} at ${time}</div>
-              </div>
-          `;
-          reminderList.appendChild(newItem);
-
-          showTab('my', null);
-          form.reset();
-          updateSelection();
-
-          alert('Reminder saved successfully!');
-          hasReminders = true;
-          toggleView();
-      });
-  }
-
-  // Setup toggle button
-  if (toggleButton) {
-      toggleButton.addEventListener('click', toggleView);
-  }
-
-  // Set default state on load
-  toggleView();
-
-  // Optional: handle tab switching styling
-  tabs.forEach(tab => {
-      tab.addEventListener('click', function () {
-          tabs.forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-      });
-  });
+    // Function to edit a reminder
+    function editReminder(reminderItem) {
+        const reminderText = reminderItem.querySelector('.reminder-text').textContent;
+        alert('Edit: ' + reminderText);
+        // You can replace this with a modal or prompt for actual editing
+    }
 });
-
-
-
