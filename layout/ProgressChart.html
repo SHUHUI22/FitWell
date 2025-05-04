@@ -124,34 +124,40 @@
 
       <!-- Row 1: Streak and Duration -->
       <div class="row gx-4" style="padding: 0 50px">
-        <!-- Streak Section -->
-        <div class="col-lg-5 col-md-12 mb-4">
-          <div class="p-4 rounded-4 shadow bg-white h-100">
-            <h2 class="container-header">Workout Streak</h2>
-            <div class="d-flex justify-content-between align-items-center my-5">
-              <!-- Text on the left -->
-              <div class="flex-grow-1 pe-4">
-                <p class="streak-days" id="noDays">20</p>
-                <p class="streak-days" id="days">days</p>
-              </div>
-
-              <!-- Ring on the right -->
-              <div class="streak-container">
-                <svg class="streak-ring">
-                  <circle class="streak-bg" cx="100" cy="100" r="90" />
-                  <circle class="streak-progress" cx="100" cy="100" r="90" />
-                </svg>
-                <div class="streak-content">
-                  <img
-                    src="/images/weightRing.png"
-                    alt="User"
-                    class="streak-image"
-                  />
-                </div>
-              </div>
+      <!-- Streak Section -->
+<div class="col-lg-5 col-md-12 mb-4">
+    <div class="p-4 rounded-4 shadow bg-white h-100">
+      
+      <!-- Header aligned to top-left -->
+      <h2 class="container-header">Workout Streak</h2>
+  
+      <!-- Centered container for ring and text -->
+      <div class="d-flex justify-content-center my-5">
+        <div class="d-flex justify-content-between align-items-center" style="max-width: 350px; width: 100%;">
+          
+          <!-- Text on the left -->
+          <div class="text-end pe-3">
+            <p class="streak-days" id="noDays">20</p>
+            <p class="streak-days" id="days">days</p>
+          </div>
+  
+          <!-- Ring on the right -->
+          <div class="streak-container">
+            <svg class="streak-ring">
+              <circle class="streak-bg" cx="100" cy="100" r="90" />
+              <circle class="streak-progress" cx="100" cy="100" r="90" />
+            </svg>
+            <div class="streak-content">
+              <img src="/images/weightRing.png" alt="User" class="streak-image" />
             </div>
           </div>
+  
         </div>
+      </div>
+  
+    </div>
+  </div>
+  
 
         <!-- Duration Section -->
         <div class="col-lg-7 col-md-12 mb-4">
@@ -214,7 +220,7 @@
             <h2 class="container-header">Body Mass Index (BMI)</h2>
 
             <!-- Height & Weight Cards Side-by-Side -->
-            <div class="row g-3 mx-3">
+            <div class="row g-3 mx-3 mt-2">
               <!-- Height Card -->
               <div class="col-md-6">
                 <div
@@ -239,7 +245,7 @@
             </div>
 
             <!-- BMI Result Section -->
-            <div class="rounded-4 shadow p-4 my-3 mx-3" style="background-color: #efe3c2">
+            <div class="rounded-4 shadow p-4 my-3 mx-4" style="background-color: #efe3c2">
               <div class="row g-3 align-items-center">
                 <h5 class="bmi">Body Mass Index<br />(BMI)</h5>
                 <!-- BMI Value -->
