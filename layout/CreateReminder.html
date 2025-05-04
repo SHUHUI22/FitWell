@@ -49,13 +49,11 @@
       </div>
     </nav>
   </header>
-
   <div class="tab-container">
-    <div class="tab active" onclick="showTab('create')">Create Reminder</div>
-    <div class="tab" onclick="showTab('my')">My Reminder</div>
-</div>
-
-
+    <div class="tab active" onclick="showTab('create', event)">Create Reminder</div>
+    <div class="tab" onclick="showTab('my', event)">My Reminders</div>
+  </div>
+  
 <div id="create" class="tab-content active">
   <div class="form-container">
     <h2 class="form-title">Create New Reminder</h2>
@@ -122,9 +120,9 @@
         <button type="submit" class="btn-save">Save Reminder</button>
     </form>
 </div>
-
+</div>
   <!-- Footer -->
-  <footer>
+<footer>
     <div class="container py-4">
         <div class="row g-2">
             <div class="col-sm-4 align-items-center">
@@ -158,6 +156,6 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/script/LandingPage_script.js"></script>    
+<script type="text/javascript" src="/script/Reminder_script.js"></script>    
 </body>
 </html>
