@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if the user is logged in
     const isLoggedIn = localStorage.getItem("loggedIn");
-    if (isLoggedIn === "true") {
+    if (isLoggedIn === "True") {
         document.body.classList.add("logged-in");
 
         const showIds = [
@@ -162,14 +162,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Logout functionality
-    const btn_logout = document.querySelector("#btn_logout");
-    if (btn_logout) {
-        btn_logout.addEventListener("click", function () {
-            localStorage.clear();
-            setTimeout(function () {
-                window.location.href = "Login.html";
-            }, 500);
-        });
-}
 });
+
+ // Log out
+ const btn_logout = document.querySelector("#btn_logout");
+ btn_logout.addEventListener("click",logout);
+
+ function logout() {
+     localStorage.clear();
+     setTimeout(function() {
+         window.location.href = "layout//Login.html";
+     }, 500); 
+ }

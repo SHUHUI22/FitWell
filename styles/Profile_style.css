@@ -136,7 +136,7 @@ label {
   background-color: #ccc;
   border-radius: 34px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s; 
 }
 
 .toggle-switch .slider::before {
