@@ -1,32 +1,15 @@
-function showTab(tabId, event) {
-    // Hide all tab contents
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(content => content.classList.remove('active'));
-  
-    // Remove active class from all tabs
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => tab.classList.remove('active'));
-  
-    // Show selected tab content
-    document.getElementById(tabId).classList.add('active');
-  
-    // Add active class to the clicked tab
-    if (event && event.currentTarget) {
-      event.currentTarget.classList.add('active');
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { 
     const remindersList = document.querySelector('#reminder-list');
-    const emptyState = document.querySelector('#empty-state'); // Empty state element
+    const emptyState = document.querySelector('#empty-state'); 
 
     // Function to update the visibility of the empty-state and the reminder list
     function updateEmptyState() {
-        if (remindersList.querySelectorAll('.reminder-item').length === 0){
-            emptyState.style.display = 'block';  // Show empty state when no reminders
-            remindersList.style.display = 'none'; // Hide the list of reminders
+        if (remindersList.querySelectorAll('.reminder-item').length === 0) {
+            emptyState.style.display = 'block';  
+            remindersList.style.display = 'none'; 
         } else {
-            emptyState.style.display = 'none';  // Hide empty state
-            remindersList.style.display = 'block'; // Show the list of reminders
+            emptyState.style.display = 'none';  
+            remindersList.style.display = 'block'; 
         }
     }
 
@@ -48,16 +31,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Function to delete a reminder
+    // Function to delete a reminder with confirmation
     function deleteReminder(reminderItem) {
-        reminderItem.remove(); // Remove the reminder item from the list
-        updateEmptyState(); // Re-check if the list is empty after deletion
+        if (confirm("Are you sure you want to delete this reminder?")) {
+            reminderItem.remove(); 
+            updateEmptyState(); 
+        }
     }
 
     // Function to edit a reminder
     function editReminder(reminderItem) {
         const reminderText = reminderItem.querySelector('.reminder-text').textContent;
-        alert('Edit: ' + reminderText);
-        // You can replace this with a modal or prompt for actual editing
+        const reminderTime = reminderItem.querySelector('.reminder-time').textContent;
+
+        // Redirect to CreateReminder page with query parameters
+        window.location.href = `/layout/CreateReminder.html?text=${encodeURIComponent(reminderText)}&time=${encodeURIComponent(reminderTime)}`;
     }
+
 });
