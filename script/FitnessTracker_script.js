@@ -47,11 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinks.forEach(link => {
         const href = link.getAttribute("href");
         // Check if the href contains the current page name or ends with it
-        if (href && (href.includes(currentPage) || href.endsWith(currentPage) || 
+        if (href && (href.includes(currentPage) || href.endsWith(currentPage) ||
             (currentPage === "FitnessTracker.html" && href.includes("FitnessTracker.html")))) {
             link.classList.add("active");
-            
-            // Add green highlight for Progress Chart
+
+            // Add green highlight for Fitness Tracker
             if (currentPage === "FitnessTracker.html") {
                 link.classList.add("active-green");
             }
@@ -61,50 +61,105 @@ document.addEventListener("DOMContentLoaded", function () {
     //Handle logworkout form
     document.querySelector("form").addEventListener("submit", function (e) {
         e.preventDefault();
-        
+
         const type = document.getElementById("workoutType").value;
         const duration = document.getElementById("duration").value;
         const date = document.getElementById("date").value;
-        const distanceOrType = document.getElementById("distanceOrType").value;
-    
-        const workout = { type, duration, date, distanceOrType };
-        
+        const workoutDetail = document.getElementById("workoutDetail").value;
+
+        const calories = getCaloriesBurned(type, duration); // default 60kg
+        const workout = { type, duration, date, workoutDetail, calories };
+
         // Store
         console.log("Logged Workout:", workout);
         alert("Workout recorded successfully!");
-    
+
         // Clear inputs
         this.reset();
     });
-    
 
-// Example step count and goal
-const currentSteps = 6800;
-const goalSteps = 10000;
-// Calculate percentage
-const percent = currentSteps / goalSteps;
-const radius = 90;
-const circumference = 2 * Math.PI * radius;
-const offset = circumference * (1 - percent);
+    // Update placeholder based on workout type
+    const workoutTypeSelect = document.getElementById("workoutType");
+    const workoutDetail = document.getElementById("workoutDetail");
 
-// Apply to stroke-dashoffset
-const progressCircle = document.querySelector('.streak-progress');
-progressCircle.style.strokeDasharray = `${circumference}`;
-progressCircle.style.strokeDashoffset = `${offset}`;
+    workoutTypeSelect.addEventListener("change", function () {
+        const selectedType = this.value;
 
-// Update text
-document.getElementById('stepCount').textContent = currentSteps.toLocaleString();
+        switch (selectedType) {
+            case "cycling":
+                workoutDetail.placeholder = "Distance (in km)";
+                break;
+            case "running":
+                workoutDetail.placeholder = "Steps (e.g. 1000)";
+                break;
+            case "aerobic":
+                workoutDetail.placeholder = "Type of Aerobic (e.g. Jumping Jacks)";
+                break;
+            case "yoga":
+                workoutDetail.placeholder = "Type of Yoga (e.g. Vinyasa)";
+                break;
+            case "zumba":
+                workoutDetail.placeholder = "Intensity (e.g. Basic, Strong)";
+                break;
+        }
+    });
+
+
+    // Example step count and goal
+    const currentSteps = 6800;
+    const goalSteps = 10000;
+    // Calculate percentage
+    const percent = currentSteps / goalSteps;
+    const radius = 60;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference * (1 - percent);
+
+    // Apply to stroke-dashoffset
+    const progressCircle = document.querySelector('.streak-progress');
+    progressCircle.style.strokeDasharray = `${circumference}`;
+    progressCircle.style.strokeDashoffset = `${offset}`;
+
+    // Update text
+    document.getElementById('stepCount').textContent = currentSteps.toLocaleString();
 
 });
 
+function getCaloriesBurned(type, duration, weight = 60) {
+    // MET values for each workout type (approximate)
+    const MET_VALUES = {
+        cycling: 9.5,
+        running: 9.8,
+        aerobic: 6.83,
+        yoga: 3.0,
+        zumba: 4.5
+    };
+
+    const met = MET_VALUES[type] || 5; // default MET if unknown type
+    const hours = duration / 60;
+
+    // Formula: Calories = MET × weight (kg) × time (hrs)
+    const calories = met * weight * hours;
+    return Math.round(calories);
+}
+
 // Log out
 const btn_logout = document.querySelector("#btn_logout");
-btn_logout.addEventListener("click",logout);
+btn_logout.addEventListener("click", logout);
 
 function logout() {
+    // Retain the 'mealFavourites' in localStorage, clear other data
+    const favourites = localStorage.getItem('mealFavourites');
+
+    // Clear all other data in localStorage
     localStorage.clear();
-    setTimeout(function() {
+
+    // Restore the 'mealFavourites' back to localStorage
+    if (favourites) {
+        localStorage.setItem('mealFavourites', favourites);
+    }
+
+    // Redirect after a slight delay
+    setTimeout(function () {
         window.location.href = "Login.html";
-    }, 500); 
+    }, 500);
 }
-  

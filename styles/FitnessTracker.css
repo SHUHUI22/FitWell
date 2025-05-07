@@ -46,7 +46,7 @@ main{
     background-color: #123524;
     color: white;
     font-weight: bold;
-    margin: 30px 0 20px;
+    margin: 20px 0 10px;
 }
 
 #btn_record:hover{
@@ -79,7 +79,7 @@ main{
 }
 
 .current-step{
-    font-size: 2rem;
+    font-size: 1.9rem;
 }
 
 .streak-ring {
@@ -87,8 +87,8 @@ main{
 }
   
 .streak-container {
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
     position: relative;
 }
   
