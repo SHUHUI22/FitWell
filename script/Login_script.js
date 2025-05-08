@@ -15,21 +15,21 @@ leftSide.addEventListener('mouseleave', () => {
     message.style.transform = 'translateX(-50px)';
 });
 
-// Password toggle
-const togglePasswords = document.querySelectorAll('.togglePassword');
+// // Password toggle
+// const togglePasswords = document.querySelectorAll('.togglePassword');
 
-togglePasswords.forEach(function(toggle) {
-    toggle.addEventListener('click', function() {
-        const inputField = this.previousElementSibling; // The input field is always the previous sibling to the icon
-        const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
-        inputField.setAttribute('type', type);
+// togglePasswords.forEach(function(toggle) {
+//     toggle.addEventListener('click', function() {
+//         const inputField = this.previousElementSibling; // The input field is always the previous sibling to the icon
+//         const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+//         inputField.setAttribute('type', type);
         
-        // Toggle the eye icon
-        const icon = this.querySelector('i');
-        icon.classList.toggle('fa-eye');
-        icon.classList.toggle('fa-eye-slash');
-    });
-});
+//         // Toggle the eye icon
+//         const icon = this.querySelector('i');
+//         icon.classList.toggle('fa-eye');
+//         icon.classList.toggle('fa-eye-slash');
+//     });
+// });
 
 // Login 
 const btn_login = document.querySelector("#btn_login");
@@ -55,3 +55,20 @@ function handleLogin(){
 function validateLogin(email, password){
     return email === "user@gmail.com" && password === "User123456";
 }
+
+ // Validate the password
+ const passwordInput = document.getElementById("password");
+ const passwordError = document.getElementById("passwordError");
+
+
+ function validatePassword() {
+     const password = passwordInput.value;
+     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+     if (!passwordPattern.test(password)) {
+        passwordError.classList.remove("d-none");
+     } else {
+        passwordError.classList.add("d-none");
+     }
+ }
+
+ passwordInput.addEventListener("input", validatePassword);

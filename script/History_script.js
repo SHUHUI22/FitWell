@@ -21,6 +21,11 @@ const activityContainer = document.getElementById("activityHistory");
 activityContainer.innerHTML = '<h2 class="fw-bold mb-4">Activity History</h2>';
 
 let currentDate = "";
+let currentActivity = null;
+let currentCard = null;
+let currentActivityToDelete = null;
+let currentCardToDelete = null;
+
 activityData.forEach((activity, index) => {
   if (activity.date !== currentDate) {
     const dateHeading = document.createElement("div");
@@ -66,6 +71,12 @@ activityData.forEach((activity, index) => {
     const timeInput = document.getElementById("editTime");
     const calInput = document.getElementById("editCalories");
     const detailLabel = document.getElementById("detailLabel");
+    const saveBtn = document.getElementById("saveEdit");
+
+    // Save which card we're editing
+    currentActivity = activity;
+    currentCard = activityCard;
+
 
     // Pre-fill values
     detailLabel.textContent = `Enter ${getDetailLabel(activity.type)}:`;
@@ -73,54 +84,70 @@ activityData.forEach((activity, index) => {
     timeInput.value = activity.time;
     calInput.value = activity.calories;
 
-    // Show the modal
-    bsModal.show();
+    // Remove old listener
+    const newSaveBtn = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
-    // Save handler
-    const saveBtn = document.getElementById("saveEdit");
-    const handleSave = () => {
+    newSaveBtn.addEventListener("click", () => {
       const newDetail = detailInput.value;
       const newTime = timeInput.value;
-      const weight = 60; // default, later fetch from database
+      const weight = 60;
       const duration = parseFloat(newTime.replace(/[^\d.]/g, ""));
 
-      activity.detail = newDetail;
-      activity.time = newTime;
-      activity.calories = getCaloriesBurned(activity.type.toLowerCase(), duration, weight) + " kcal";
+      currentActivity.detail = newDetail;
+      currentActivity.time = newTime;
+      currentActivity.calories = getCaloriesBurned(currentActivity.type.toLowerCase(), duration, weight) + " kcal";
 
-      activityCard.querySelector(".detail").textContent = newDetail;
-      activityCard.querySelector(".time").textContent = activity.time;
-      activityCard.querySelector(".calories").textContent = activity.calories;
+      currentCard.querySelector(".detail").textContent = newDetail;
+      currentCard.querySelector(".time").textContent = currentActivity.time;
+      currentCard.querySelector(".calories").textContent = currentActivity.calories;
 
       bsModal.hide();
-      saveBtn.removeEventListener("click", handleSave);
-    };
-
-    saveBtn.addEventListener("click", handleSave);
+    });
+    // Show the modal
+    bsModal.show();
   });
 
   //Delete Button
   btnDelete.addEventListener("click", () => {
-    if (confirm("Are you sure you want to delete this activity?")) {
-      activityCard.remove();
+    currentCardToDelete = activityCard;
+    currentActivityToDelete = activity;
+
+    const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+    deleteModal.show();
+  });
+});
+
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+confirmDeleteBtn.addEventListener("click", () => {
+  if (currentCardToDelete && currentActivityToDelete) {
+    // Remove card
+    currentCardToDelete.remove();
 
     // Check if any other cards exist with the same date
-    const otherCardsWithSameDate = Array.from(activityContainer.querySelectorAll(".history-card")).some(card => {
+    const sameDateCards = Array.from(activityContainer.querySelectorAll(".history-card")).some(card => {
       const heading = card.previousElementSibling;
-      return heading && heading.textContent === activity.date;
+      return heading && heading.textContent === currentActivityToDelete.date;
     });
 
-    // If no more activities for that date, remove the heading
-    if (!otherCardsWithSameDate) {
+    // Remove heading if no more same-date cards
+    if (!sameDateCards) {
       const headings = activityContainer.querySelectorAll("div.mb-2.mt-3");
       headings.forEach(heading => {
-        if (heading.textContent === activity.date) {
+        if (heading.textContent === currentActivityToDelete.date) {
           heading.remove();
         }
       });
     }
-    }
-  });
+
+    // Reset
+    currentCardToDelete = null;
+    currentActivityToDelete = null;
+  }
+
+  const deleteModalEl = document.getElementById("deleteModal");
+  const modal = bootstrap.Modal.getInstance(deleteModalEl);
+  modal.hide();
 });
 
 function getIcon(type) {
@@ -143,8 +170,8 @@ function getIcon(type) {
 
 function getDetailLabel(type) {
   switch (type.toLowerCase()) {
-    case "cycle": return "Distance";
-    case "run": return "Steps";
+    case "cycling": return "Distance";
+    case "running": return "Steps";
     case "aerobic": return "Type";
     case "yoga": return "Type";
     case "zumba": return "Intensity";
@@ -190,11 +217,11 @@ function logout() {
 
   // Restore the 'mealFavourites' back to localStorage
   if (favourites) {
-      localStorage.setItem('mealFavourites', favourites);
+    localStorage.setItem('mealFavourites', favourites);
   }
 
   // Redirect after a slight delay
   setTimeout(function () {
-      window.location.href = "Login.html";
+    window.location.href = "Login.html";
   }, 500);
 }

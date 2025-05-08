@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FitWell</title>
+  <title>Profile</title>
+  <!-- <link href="/styles/index.css" rel="stylesheet"> -->
   <link href="/styles/index.css" rel="stylesheet">
   <link href="/styles/Profile_style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -26,15 +27,15 @@
     </button>
 
     <!-- Nav items-->
-    <div class="collapse navbar-collapse navbar-collapse" id="navbarText">
+    <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav text-nowrap ms-auto d-flex justify-content-evenly w-100">
         <li class="nav-item" id="nav_home"><a href="/layout/LandingPage.html#home" class="nav-link fw-bold">Home</a></li>
         <li class="nav-item" id="nav_aboutUs"><a href="/layout/LandingPage.html#aboutUs" class="nav-link fw-bold">About Us</a></li>
         <li class="nav-item" id="nav_features"><a href="/layout/LandingPage.html#features" class="nav-link fw-bold">Features</a></li>
-        <li class="nav-item" id="nav_tracker"><a href="" class="nav-link fw-bold">Fitness Tracker</a></li>
+        <li class="nav-item" id="nav_tracker"><a href="/layout/FitnessTracker.html" class="nav-link fw-bold">Fitness Tracker</a></li>
         <li class="nav-item" id="nav_progress"><a href="/layout/ProgressChart.html" class="nav-link fw-bold">Progress Chart</a></li>
-        <li class="nav-item" id="nav_nutrition"><a href="" class="nav-link fw-bold">Nutrition Planner</a></li>
-        <li class="nav-item" id="nav_reminder"><a href="" class="nav-link fw-bold">Reminder</a></li>
+        <li class="nav-item" id="nav_nutrition"><a href="/layout/NutritionPlanner.html" class="nav-link fw-bold">Nutrition Planner</a></li>
+        <li class="nav-item" id="nav_reminder"><a href="/layout/CreateReminder.html" class="nav-link fw-bold">Reminder</a></li>
         <li class="nav-item dropdown" id="nav_profile">
           <a href="#" class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown">
             <i class="fas fa-user-circle"></i>
@@ -51,17 +52,17 @@
 </nav>
 
 <main>
-  <div class="container py-5">
+  <div class="container py-4">
     <div class="profile-settings-wrapper">
       <section class="profile">
-        <img src="/images/signup&login.jpg" alt="Profile Picture" class="avatar" />
+        <img src="/images/signup&login.jpg" alt="Profile Picture" class="avatar" id="profilePic"/>
         <h2>Username</h2>
         <div class="info-row"><span><strong>Email</strong></span><span>abc@gmail.com</span></div>
         <div class="info-row"><span><strong>Age</strong></span><span>20</span></div>
         <div class="info-row"><span><strong>Gender</strong></span><span>Male</span></div>
-        <div class="info-row"><span><strong>Height</strong></span><span>1.68</span></div>
+        <div class="info-row"><span><strong>Height</strong></span><span>168</span></div>
         <div class="info-row"><span><strong>Weight</strong></span><span>55</span></div>
-        <div class="info-row"><span><strong>Body Fat</strong></span><span>25</span></div>
+        <div class="info-row"><span><strong>Target Weight</strong></span><span>25</span></div>
       </section>
 
       <section class="settings">
@@ -111,11 +112,13 @@
             <label for="newPassword" class="form-label">New Password</label>
             <input type="password" class="form-control" id="newPassword" required>
           </div>
+          <div id="newPasswordError" class="text-danger d-none">Password must contain at least 8 characters, including uppercase, lowercase, and a number.</div>
           <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirm New Password</label>
             <input type="password" class="form-control" id="confirmPassword" required>
           </div>
-          <button type="submit" class="btn-primary">Update Password</button>
+          <div id="confirmNewPasswordError" class="text-danger d-none">Passwords do not match.</div>
+          <button type="submit" class="btn-primary" id="saveNewPassword">Update Password</button>
         </form>
       </div>
     </div>
@@ -133,8 +136,15 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
+            <img id="modalProfilePicPreview" src="" alt="Profile Picture" class="avatar" />
+          </div>
+          <div class="mb-3">
+            <label for="modalUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="modalUsername">
+          </div>
+          <div class="mb-3">
             <label for="modalEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="modalEmail">
+            <input type="email" class="form-control" id="modalEmail" disabled>
           </div>
           <div class="mb-3">
             <label for="modalAge" class="form-label">Age</label>
@@ -149,7 +159,7 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="modalHeight" class="form-label">Height (m)</label>
+            <label for="modalHeight" class="form-label">Height (cm)</label>
             <input type="number" step="0.01" class="form-control" id="modalHeight">
           </div>
           <div class="mb-3">
@@ -157,8 +167,12 @@
             <input type="number" step="0.1" class="form-control" id="modalWeight">
           </div>
           <div class="mb-3">
-            <label for="modalBodyFat" class="form-label">Body Fat (%)</label>
-            <input type="number" step="0.1" class="form-control" id="modalBodyFat">
+            <label for="modalTargetWeight" class="form-label">Target Weight (kg)</label>
+            <input type="number" step="0.1" class="form-control" id="modalTargetWeight">
+          </div>
+          <div class="mb-3">
+            <label for="modalProfilePic" class="form-label">Profile Picture</label>
+            <input type="file" class="form-control" id="modalProfilePic" accept="image/*">
           </div>
           <button type="button" id="saveProfileChanges" class="btn-primary">Save Changes</button>
         </form>
@@ -184,10 +198,10 @@
         <a href="/layout/LandingPage.html#home">Home</a>
         <a href="/layout/LandingPage.html#aboutUs">About Us</a>
         <a href="/layout/LandingPage.html#features">Features</a>
-        <a href="" id="quicklink_tracker" class="d-none">Fitness Tracker</a>
-        <a href="" id="quicklink_progress" class="d-none">Progress Chart</a>
-        <a href="" id="quicklink_nutrition" class="d-none">Nutrition Planner</a>
-        <a href="" id="quicklink_reminder" class="d-none">Reminder</a>
+        <a href="/layout/FitnessTracker.html" id="quicklink_tracker" class="d-none">Fitness Tracker</a>
+        <a href="/layout/ProgressChart.html" id="quicklink_progress" class="d-none">Progress Chart</a>
+        <a href="/layout/NutritionPlanner.html" id="quicklink_nutrition" class="d-none">Nutrition Planner</a>
+        <a href="/layout/CreateReminder.html" id="quicklink_reminder" class="d-none">Reminder</a>
       </div>
       <div id="contact" class="col-sm-4 align-items-center justify-content-center">
         <h4>Contact Us</h4>
@@ -206,8 +220,7 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 <script src="/script/Profile_script.js"></script>
 </body>
 </html>

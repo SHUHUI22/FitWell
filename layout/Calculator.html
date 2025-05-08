@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/styles/index.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/Calculator_style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <title>Nutrition Calculator</title>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-sm py-1 px-4">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <!-- Web name and logo-->
+      <a href="/layout/LandingPage.html" class="web_name navbar-brand fw-bold d-flex align-items-center">
+        <img src="/images/logo.png" width="50px" height="50px" class="me-1" />
+        FitWell
+      </a>
+
+      <!-- Display hamburger icon when the screen is small-->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Nav items-->
+      <div class="collapse navbar-collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav text-nowrap ms-auto d-flex justify-content-evenly w-100">
+          <li class="nav-item" id="nav_home">
+            <a href="/layout/LandingPage.html#home" class="nav-link fw-bold">Home</a>
+          </li>
+
+          <li class="nav-item" id="nav_aboutUs">
+            <a href="/layout/LandingPage.html#aboutUs" class="nav-link fw-bold">About Us</a>
+          </li>
+
+          <li class="nav-item" id="nav_features">
+            <a href="/layout/LandingPage.html#features" class="nav-link fw-bold">Features</a>
+          </li>
+
+          <li class="nav-item" id="nav_tracker">
+            <a href="/layout/FitnessTracker.html" class="nav-link fw-bold">Fitness Tracker</a>
+          </li>
+
+          <li class="nav-item" id="nav_progress">
+            <a href="/layout/ProgressChart.html" class="nav-link fw-bold">Progress Chart</a>
+          </li>
+
+          <li class="nav-item" id="nav_nutrition">
+            <a href="/layout/NutritionPlanner.html" class="nav-link fw-bold">Nutrition Planner</a>
+          </li>
+
+          <li class="nav-item" id="nav_reminder">
+            <a href="/layout/CreateReminder.html" class="nav-link fw-bold">Reminder</a>
+          </li>
+
+          <li class="nav-item dropdown" id="nav_profile">
+            <a href="#" class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item fw-bold" href="/layout/Profile.html">Profile</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item fw-bold" href="/layout/LandingPage.html#logout" id="btn_logout">Log Out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container pb-3">
+      <h2>Nutrition Calculator</h2>
+      <div class="input-group border border-1 border-light rounded">
+        <input id="search-input" type="text" class="form-control" placeholder="eg. 1 cup green tea">
+        <button id="btn-analyze" class="btn btn-success">Analyze</button>
+      </div>
+      <div id="output">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <img class="img-fluid" src="/images/calculate.png" alt="Search illustration">
+          <p class="text-muted">Enter a dish name or ingredients to search for nutrition information.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Contains the web page document’s footer information  -->
+  <footer>
+    <div class="container py-4">
+      <div class="row g-2">
+        <div class="col-sm-4 align-items-center">
+          <h4>Fitwell</h4>
+          <p>
+            Your companion for a healthier, more balanced lifestyle. Track
+            your progress, plan meals, and stay motivated—anytime, anywhere.
+          </p>
+        </div>
+        <div id="quick_link" class="col-sm-4 d-flex flex-column">
+          <h4>Quick Links</h4>
+          <a href="/layout/LandingPage.html#home">Home</a>
+          <a href="/layout/LandingPage.html#aboutUs">About Us</a>
+          <a href="/layout/LandingPage.html#features">Features</a>
+          <a href="" id="quicklink_tracker" class="d-none">Fitness Tracker</a>
+          <a href="/layout/ProgressChart.html" id="quicklink_progress" class="d-none">Progress Chart</a>
+          <a href="/layout/NutritionPlanner.html" id="quicklink_nutrition" class="d-none">Nutrition Planner</a>
+          <a href="" id="quicklink_reminder" class="d-none">Reminder</a>
+        </div>
+        <div id="contact" class="col-sm-4 align-items-center justify-content-center">
+          <h4>Contact Us</h4>
+          <div class="d-flex flex-row">
+            <i class="fas fa-phone-alt me-3 pt-1"></i>
+            <a href="tel:0123456789">012-345 6789</a>
+          </div>
+          <div class="d-flex flex-row mt-3">
+            <i class="fas fa-envelope me-3 pt-1"></i>
+            <a href="mailto:fitwell@gmail.com">fitwell@gmail.com</a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <p class="text-center mb-0">
+        Copyright © 2025 All right reserved to FitWell
+      </p>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/script/Calculator_script.js"></script>
+</body>
+
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nutrition Breakdown</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f9f4;
+      color: #333;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #777;
+    }
+
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #eaf7ea;
+      color: #333;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .note {
+      margin-top: 25px;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🥗 Nutrition Breakdown</h2>
+  <input id="ingredientInput" placeholder="e.g. 1 cup green tea, 2 eggs">
+  <button onclick="getNutrition()">Analyze</button>
+  <div id="output"></div>
+</div>
+
+<script>
+  const apiKey = 'ec2038346da449b89a58e0be5dee7ec3'; // Replace with your Spoonacular API key
+
+  async function getNutrition() {
+    const input = document.getElementById('ingredientInput').value.trim();
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = '';
+
+    if (!input) {
+      outputDiv.innerHTML = '<div class="error">Please enter ingredients.</div>';
+      return;
+    }
+
+    try {
+      const parseUrl = `https://api.spoonacular.com/recipes/parseIngredients?apiKey=${apiKey}&ingredientList=${encodeURIComponent(input)}&servings=1`;
+
+      const parseResponse = await fetch(parseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+
+      const parsedData = await parseResponse.json();
+      if (!Array.isArray(parsedData) || parsedData.length === 0) {
+        outputDiv.innerHTML = '<div class="error">No ingredients found.</div>';
+        return;
+      }
+
+      let allNutrients = [];
+
+      for (const item of parsedData) {
+        const id = item.id;
+        if (!id) continue;
+
+        const infoUrl = `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${apiKey}&amount=${item.amount}&unit=${item.unit}`;
+        const infoResponse = await fetch(infoUrl);
+        const infoData = await infoResponse.json();
+
+        const nutrients = infoData.nutrition?.nutrients || [];
+        allNutrients.push(...nutrients);
+      }
+
+      const nutrientMap = {};
+      allNutrients.forEach(n => {
+        const name = n.name;
+        if (!nutrientMap[name]) {
+          nutrientMap[name] = { amount: n.amount, unit: n.unit, percent: n.percentOfDailyNeeds };
+        } else {
+          nutrientMap[name].amount += n.amount;
+          nutrientMap[name].percent += n.percentOfDailyNeeds;
+        }
+      });
+
+      const nutrientGroups = [
+        { label: "Calories", items: ["Calories"] },
+        { label: "Protein", items: ["Protein"] },
+        {
+          label: "Fat",
+          items: ["Fat", "Saturated Fat", "Trans Fat", "Mono Unsaturated Fat", "Poly Unsaturated Fat"]
+        },
+        { label: "Carbohydrates", items: ["Carbohydrates"] },
+        { label: "Cholesterol", items: ["Cholesterol"] },
+        {
+          label: "Vitamins & Minerals",
+          items: ["Vitamin A", "Vitamin B5", "Vitamin B12", "Iron", "Calcium", "Potassium"]
+        }
+      ];
+
+      const tableHTML = generateStructuredTable(nutrientMap, nutrientGroups);
+      outputDiv.innerHTML = `
+        <div class="subtitle">For: <strong>${input}</strong></div>
+        ${tableHTML}
+        <div class="note">* % Daily Value is provided by the API.</div>
+      `;
+
+    } catch (err) {
+      console.error(err);
+      outputDiv.innerHTML = '<div class="error">Failed to fetch data. Please try again.</div>';
+    }
+  }
+
+  function generateStructuredTable(nutrientMap, groups) {
+    let tableHTML = `
+      <table>
+        <tr>
+          <th>Nutrient</th>
+          <th>Amount</th>
+          <th>% Daily Value*</th>
+        </tr>
+    `;
+
+    for (const group of groups) {
+      const groupNutrients = group.items
+        .map(name => ({ name, data: nutrientMap[name] }))
+        .filter(n => n.data);
+
+      if (groupNutrients.length === 0) continue;
+
+      // Only add header row if there are multiple sub-nutrients
+      if (groupNutrients.length > 1) {
+        tableHTML += `<tr><td colspan="3"><strong>${group.label}</strong></td></tr>`;
+      }
+
+      for (const { name, data } of groupNutrients) {
+        const amount = `${data.amount.toFixed(2)} ${data.unit}`;
+        const daily = isFinite(data.percent) ? `${data.percent.toFixed(2)}%` : '—';
+        tableHTML += `
+          <tr>
+            <td style="padding-left: ${groupNutrients.length > 1 ? '20px' : '0'};">${name}</td>
+            <td>${amount}</td>
+            <td>${daily}</td>
+          </tr>
+        `;
+      }
+    }
+
+    tableHTML += `</table>`;
+    return tableHTML;
+  }
+</script>
+
+</body>
+</html>
+ -->

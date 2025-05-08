@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if the user is logged in
     const isLoggedIn = localStorage.getItem("loggedIn");
-    if (isLoggedIn === "True") {
+    if (isLoggedIn === "true") {
         document.body.classList.add("logged-in");
 
         const showIds = [
@@ -41,22 +41,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Retrieve profile info from localStorage
+    const username = localStorage.getItem("userUsername") || "User";
     const email = localStorage.getItem("userEmail") || "user@gmail.com";
     const age = localStorage.getItem("userAge") || "20";
     const gender = localStorage.getItem("userGender") || "Male";
-    const height = localStorage.getItem("userHeight") || "1.68"; // Numeric value only, no "m"
+    const height = localStorage.getItem("userHeight") || "168"; // Numeric value only, no "m"
     const weight = localStorage.getItem("userWeight") || "55"; // Numeric value only, no "kg"
-    const bodyFat = localStorage.getItem("userBodyFat") || "25"; // Numeric value only, no "%"
+    const targetWeight = localStorage.getItem("userTargetWeight") || "50"; // Numeric value only, no "kg"
 
     // Populate profile info on page
+    const usernameHeading = document.querySelector(".profile h2");
     const profileFields = document.querySelectorAll(".profile .info-row span:last-child");
+    if (usernameHeading) {
+        usernameHeading.textContent = username; // Set username in <h2>
+    }
     if (profileFields.length >= 6) {
         profileFields[0].textContent = email;
         profileFields[1].textContent = age;
         profileFields[2].textContent = gender;
         profileFields[3].textContent = `${height} m`;
         profileFields[4].textContent = `${weight} kg`;
-        profileFields[5].textContent = `${bodyFat} %`;
+        profileFields[5].textContent = `${targetWeight} kg`;
+    }
+
+    // Load profile picture
+    const profilePic = document.getElementById("profilePic");
+    const savedProfilePic = localStorage.getItem("userProfilePic");
+    if (profilePic) {
+        profilePic.src = savedProfilePic || "/images/signup&login.jpg";
     }
 
     // Show the update profile modal and populate with existing profile data
@@ -64,12 +76,34 @@ document.addEventListener("DOMContentLoaded", function () {
     if (updateProfileButton) {
         updateProfileButton.addEventListener("click", () => {
             const modal = new bootstrap.Modal(document.getElementById("updateProfileModal"));
+            document.getElementById("modalUsername").value = username;
             document.getElementById("modalEmail").value = email;
             document.getElementById("modalAge").value = age;
             document.getElementById("modalGender").value = gender;
             document.getElementById("modalHeight").value = height; // Numeric value
             document.getElementById("modalWeight").value = weight; // Numeric value
-            document.getElementById("modalBodyFat").value = bodyFat; // Numeric value
+            document.getElementById("modalTargetWeight").value = targetWeight; // Numeric value
+            
+            const modalProfilePicInput = document.getElementById("modalProfilePic");
+            const modalProfilePicPreview = document.getElementById("modalProfilePicPreview");
+
+            if (modalProfilePicInput && modalProfilePicPreview) {
+                // Show existing profile picture
+                modalProfilePicPreview.src = savedProfilePic || "/images/signup&login.jpg";
+
+                // Update preview when a new image is selected
+                modalProfilePicInput.addEventListener("change", function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            modalProfilePicPreview.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
             modal.show();
         });
     }
@@ -78,20 +112,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveProfileChangesButton = document.getElementById("saveProfileChanges");
     if (saveProfileChangesButton) {
         saveProfileChangesButton.addEventListener("click", () => {
-            const newEmail = document.getElementById("modalEmail").value;
+            const newUsername = document.getElementById("modalUsername").value;
             const newAge = document.getElementById("modalAge").value;
             const newGender = document.getElementById("modalGender").value;
             const newHeight = parseFloat(document.getElementById("modalHeight").value);
             const newWeight = parseFloat(document.getElementById("modalWeight").value);
-            const newBodyFat = parseFloat(document.getElementById("modalBodyFat").value);
+            const newTargetWeight = parseFloat(document.getElementById("modalTargetWeight").value);
+            const file = document.getElementById("modalProfilePic").files[0];
 
             // Save the updated values to localStorage
-            localStorage.setItem("userEmail", newEmail);
+            localStorage.setItem("userUsername", newUsername);
             localStorage.setItem("userAge", newAge);
             localStorage.setItem("userGender", newGender);
             localStorage.setItem("userHeight", newHeight);
             localStorage.setItem("userWeight", newWeight);
-            localStorage.setItem("userBodyFat", newBodyFat);
+            localStorage.setItem("userTargetWeight", newTargetWeight);
+
+            // Save profile picture if selected
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    localStorage.setItem("userProfilePic", e.target.result);
+                    location.reload(); // Reload after setting the image
+                };
+                reader.readAsDataURL(file);
+            } else {
+                location.reload();
+            }
 
             // Close the modal and clean up the backdrop
             const modal = bootstrap.Modal.getInstance(document.getElementById("updateProfileModal"));
@@ -113,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validate the password change form
     const newPasswordInput = document.getElementById("newPassword");
-    const confirmNewPasswordInput = document.getElementById("confirmNewPassword");
+    const confirmNewPasswordInput = document.getElementById("confirmPassword");
     const newPasswordError = document.getElementById("newPasswordError");
     const confirmNewPasswordError = document.getElementById("confirmNewPasswordError");
 
@@ -164,13 +211,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
- // Log out
- const btn_logout = document.querySelector("#btn_logout");
- btn_logout.addEventListener("click",logout);
+// Log out
+const btn_logout = document.querySelector("#btn_logout");
+btn_logout.addEventListener("click", logout);
 
- function logout() {
-     localStorage.clear();
-     setTimeout(function() {
-         window.location.href = "layout//Login.html";
-     }, 500); 
- }
+function logout() {
+  // Retain the 'mealFavorites' in localStorage, clear other data
+  const favorites = localStorage.getItem('mealFavourites');
+
+  // Clear all other data in localStorage
+  localStorage.clear();
+
+  // Restore the 'mealFavorites' back to localStorage
+  if (favorites) {
+    localStorage.setItem('mealFavourites', favorites);
+  }
+
+  // Redirect after a slight delay
+  setTimeout(function () {
+    window.location.href = "Login.html";
+  }, 500);
+}

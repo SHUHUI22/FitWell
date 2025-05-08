@@ -378,11 +378,22 @@ new Chart(ctx, {
 
 // Logout functionality
 const btn_logout = document.querySelector("#btn_logout");
-if (btn_logout) {
-    btn_logout.addEventListener("click", function () {
-        localStorage.clear();
-        setTimeout(function () {
-            window.location.href = "Login.html";
-        }, 500);
-    });
+btn_logout.addEventListener("click", logout);
+
+function logout() {
+    // Retain the 'mealFavourites' in localStorage, clear other data
+    const favourites = localStorage.getItem('mealFavourites');
+
+    // Clear all other data in localStorage
+    localStorage.clear();
+
+    // Restore the 'mealFavourites' back to localStorage
+    if (favourites) {
+        localStorage.setItem('mealFavourites', favourites);
+    }
+
+    // Redirect after a slight delay
+    setTimeout(function () {
+        window.location.href = "Login.html";
+    }, 500);
 }
