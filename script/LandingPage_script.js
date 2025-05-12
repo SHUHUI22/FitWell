@@ -11,7 +11,7 @@ btn_signup.addEventListener("click", function(){
 });
 
 btn_get_started.addEventListener("click", function(){
-    window.location.href = "Login.html";
+    window.location.href = "SignUp.html";
 });
 
 // Landing Page after logged in
