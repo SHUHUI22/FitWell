@@ -19,73 +19,210 @@ main {
     color: #000000;
 }
 
-/* Streak Container */
+/* same as p-4, used for centering the streak wrapper*/
+.custom-padding {
+    padding: 1.5rem !important; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+/* Container for streak info and ring */
+.streak-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+/* Text Column */
+.streak-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical alignment */
+  align-items: center; /* Horizontal alignment */
+  margin-right: 1.5rem;
+  min-width: 100px;
+}
+
+#noDays {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #123524;
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+#days {
+  font-size: 2.5rem;
+  letter-spacing: 0.5rem;
+  font-style: italic;
+  color: #123524;
+  margin: 0;
+  line-height: 1;
+}
+
+#noDays, #days {
+    text-align: center;
+    width: 100%; /* Ensures the text spans the full width of parent */
+  }
+
+/* Ring Column */
 .streak-container {
-    position: relative;
-    width: 30vw;
-    max-width: 200px;
-    aspect-ratio: 1 / 1;
-    flex-shrink: 0;
-    margin-left: auto;
-    margin-right: 15px;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  aspect-ratio: 1 / 1;;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.streak-ring-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
 .streak-ring {
-    transform: rotate(-90deg);
-    width: 100%;
-    height: 100%;
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
 .streak-bg,
 .streak-progress {
-    fill: none;
-    stroke-width: 10;
+  fill: none;
+  stroke-width: 10;
 }
 
 .streak-bg {
-    stroke: #123524;
+  stroke: #123524;
 }
 
 .streak-progress {
-    stroke: #99BC85;
-    stroke-linecap: round;
-    stroke-dasharray: 565;
-    stroke-dashoffset: 565;
-    transition: stroke-dashoffset 0.5s ease;
+  stroke: #99BC85;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
 }
 
 .streak-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 70%;
-    height: 70%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .streak-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.streak-days {
-    text-align: center;
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .streak-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  #noDays {
+    font-size: 4.5rem;
+  }
+  
+  #days {
+    font-size: 2.2rem;
+    letter-spacing: 0.4rem;
+  }
 }
 
-#noDays {
-    font-size: 5rem;
-    font-weight: bold;
-    color: #123524;
+@media (max-width: 992px) {
+  .streak-container {
+    width: 160px;
+    height: 160px;
+  }
+  
+  #noDays {
+    font-size: 4rem;
+  }
+  
+  #days {
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+  }
+  
+  .streak-text {
+    margin-right: 1rem;
+  }
 }
 
-#days {
-    font-size: 2.5rem;
-    letter-spacing: 1rem;
-    font-style: italic;
-    color: #123524;
-    margin: -45px 0 0 0;
+@media (max-width: 768px) {
+  .streak-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .streak-text {
+    align-items: center;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .streak-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  #noDays {
+    font-size: 3.5rem;
+  }
+  
+  #days {
+    font-size: 1.8rem;
+    letter-spacing: 0.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .streak-container {
+    width: 130px;
+    height: 130px;
+  }
+  
+  #noDays {
+    font-size: 3rem;
+  }
+  
+  #days {
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+  }
+}
+
+/* High DPI screens - additional adjustment for zoom */
+@media screen and (min-resolution: 120dpi) {
+  .streak-wrapper {
+    transform: scale(0.95);
+    transform-origin: center center;
+  }
+}
+
+@media screen and (min-resolution: 144dpi) {
+  .streak-wrapper {
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
 }
 
 .info {
@@ -291,3 +428,4 @@ canvas {
         min-height: 200px;
     }
 }
+
