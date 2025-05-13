@@ -1,51 +1,176 @@
-document.addEventListener('DOMContentLoaded', function() { 
+document.addEventListener('DOMContentLoaded', function () {
+    // DOM elements for reminders list and empty state
     const remindersList = document.querySelector('#reminder-list');
-    const emptyState = document.querySelector('#empty-state'); 
+    const emptyState = document.querySelector('#empty-state');
+    let reminderToDelete = null;
+    let reminderToEdit = null;
 
-    // Function to update the visibility of the empty-state and the reminder list
+    // Update the display of the empty state based on the reminders list
     function updateEmptyState() {
-        if (remindersList.querySelectorAll('.reminder-item').length === 0) {
-            emptyState.style.display = 'block';  
-            remindersList.style.display = 'none'; 
-        } else {
-            emptyState.style.display = 'none';  
-            remindersList.style.display = 'block'; 
-        }
+        const hasReminders = remindersList.querySelectorAll('.reminder-item').length > 0;
+        emptyState.style.display = hasReminders ? 'none' : 'block';
+        remindersList.style.display = hasReminders ? 'block' : 'none';
     }
 
-    // Ensure the empty state is correctly updated on page load
     updateEmptyState();
 
-    // Event delegation for edit and delete actions
-    remindersList.addEventListener('click', function(event) {
+    // Delete modal
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+    // Handle reminder interactions (edit, delete)
+    remindersList.addEventListener('click', function (event) {
         const target = event.target;
 
-        // Delete button clicked
+        // Handle delete
         if (target.closest('.delete-btn')) {
-            deleteReminder(target.closest('.reminder-item'));
+            reminderToDelete = target.closest('.reminder-item');
+            deleteModal.show();
         }
 
-        // Edit button clicked
-        else if (target.closest('.edit-btn')) {
-            editReminder(target.closest('.reminder-item'));
+        // Handle edit
+        if (target.closest('.edit-btn')) {
+            reminderToEdit = target.closest('.reminder-item');
+            openEditModal(reminderToEdit);
         }
     });
 
-    // Function to delete a reminder with confirmation
-    function deleteReminder(reminderItem) {
-        if (confirm("Are you sure you want to delete this reminder?")) {
-            reminderItem.remove(); 
-            updateEmptyState(); 
+    // Confirm delete reminder
+    confirmDeleteBtn.addEventListener('click', function () {
+        if (reminderToDelete) {
+            reminderToDelete.remove();
+            updateEmptyState();
+            deleteModal.hide();
+            reminderToDelete = null;
         }
+    });
+
+    // Open edit modal and populate with current reminder data
+    function openEditModal(reminder) {
+        const title = reminder.querySelector('.reminder-text').innerText;
+        const datetimeText = reminder.querySelector('.reminder-time').innerText;
+        const repeatText = datetimeText.split('-')[1].trim();
+        const [dateTimePart] = datetimeText.split('at');
+        const date = new Date(dateTimePart.trim());
+        const formattedDate = date.toISOString().split('T')[0];
+
+        // Extract time and convert to 24-hour
+        const rawTime = datetimeText.split('at')[1].split('-')[0].trim();
+        let [timePart, ampm] = rawTime.split(' ');
+        let [hours, minutes] = timePart.split(':').map(Number);
+        if (ampm === 'PM' && hours < 12) hours += 12;
+        if (ampm === 'AM' && hours === 12) hours = 0;
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+
+        // Populate modal with data
+        document.getElementById('editTitle').value = title;
+        document.getElementById('editDate').value = formattedDate;
+        document.getElementById('editTime').value = formattedTime;
+        document.getElementById('editRepeat').value = repeatText;
+
+        // Populate category (without allowing editing)
+        const category = reminder.querySelector('.category-tag').textContent;
+        const categorySelect = document.getElementById('editCategory');
+        categorySelect.value = category;  // Set category value
+        categorySelect.disabled = true;  // Disable category dropdown
+
+        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+        editModal.show();
     }
 
-    // Function to edit a reminder
-    function editReminder(reminderItem) {
-        const reminderText = reminderItem.querySelector('.reminder-text').textContent;
-        const reminderTime = reminderItem.querySelector('.reminder-time').textContent;
+    // Save edited reminder
+    document.getElementById('saveEdit').addEventListener('click', function () {
+        if (reminderToEdit) {
+            saveReminderEdits(reminderToEdit);
+        }
+    });
 
-        // Redirect to CreateReminder page with query parameters
-        window.location.href = `/layout/CreateReminder.html?text=${encodeURIComponent(reminderText)}&time=${encodeURIComponent(reminderTime)}`;
+    // Function to save the reminder edits
+    function saveReminderEdits(reminder) {
+        const title = document.getElementById('editTitle').value;
+        const date = document.getElementById('editDate').value;
+        const time = document.getElementById('editTime').value;
+        const repeat = document.getElementById('editRepeat').value;
+
+        const dateObj = new Date(`${date}T${time}`);
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+    });
+        const formattedTime = dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+        // Update reminder display
+        reminder.querySelector('.reminder-text').textContent = title;
+        reminder.querySelector('.reminder-time').textContent = `${formattedDate} at ${formattedTime} - ${repeat.charAt(0).toUpperCase() + repeat.slice(1)}`;
+
+        bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+        reminderToEdit = null;
     }
 
+    // User login and logout logic
+    const isLoggedIn = localStorage.getItem("loggedIn");
+
+    if (isLoggedIn === "true") {
+        handleLoggedInState();
+    }
+
+    // Handle logged-in state UI changes
+    function handleLoggedInState() {
+        document.body.classList.add("logged-in");
+
+        const showIds = [
+            "nav_tracker", "nav_nutrition", "nav_progress", "nav_reminder", "nav_profile",
+            "quicklink_tracker", "quicklink_progress", "quicklink_nutrition", "quicklink_reminder"
+        ];
+        showIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove("d-none");
+        });
+
+        const btn_login = document.querySelector("#btn_login");
+        const btn_signup = document.querySelector("#btn_signup");
+        const btn_get_started = document.querySelector("#btn_get_started");
+
+        if (btn_login) btn_login.classList.add("d-none");
+        if (btn_signup) btn_signup.classList.add("d-none");
+        if (btn_get_started) btn_get_started.classList.add("d-none");
+
+        const buttons = document.querySelectorAll(".btn_feature");
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                const card = button.closest(".card");
+                const link = card.getAttribute("data-link");
+                if (link) {
+                    window.location.href = link;
+                }
+            });
+        });
+    }
+
+    // Highlight the active page in the navigation
+    const currentPage = window.location.pathname.split("/").pop();
+    const navLinks = document.querySelector("#nav_reminder a");
+
+    const isReminderPage = currentPage === "CreateReminder.html" || currentPage === "MyReminder.html";
+    if (isReminderPage && navLinks) {
+        navLinks.classList.add("active");
+    }
+
+    // Logout functionality
+    const btn_logout = document.querySelector("#btn_logout");
+    if (btn_logout) {
+        btn_logout.addEventListener("click", logout);
+    }
+
+    function logout() {
+        const favorites = localStorage.getItem('mealFavourites');
+        localStorage.clear();
+        if (favorites) {
+            localStorage.setItem('mealFavourites', favorites);
+        }
+        setTimeout(() => {
+            window.location.href = "Login.html";
+        }, 500);
+    }
 });
