@@ -105,22 +105,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // Example step count and goal
-    const currentSteps = 6800;
-    const goalSteps = 10000;
-    // Calculate percentage
-    const percent = currentSteps / goalSteps;
-    const radius = 60;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference * (1 - percent);
+    // Step goal logic
+    let goalSteps = localStorage.getItem("goalSteps") || 10000;
+    goalSteps = parseInt(goalSteps);
+    const goalValue = document.getElementById("goalValue");
+    if (goalValue) {
+    goalValue.textContent = `Goal: ${goalSteps}`;
+    }
 
-    // Apply to stroke-dashoffset
-    const progressCircle = document.querySelector('.streak-progress');
-    progressCircle.style.strokeDasharray = `${circumference}`;
-    progressCircle.style.strokeDashoffset = `${offset}`;
+    // Example step count
+    const currentSteps = 6800;
 
     // Update text
     document.getElementById('stepCount').textContent = currentSteps.toLocaleString();
+    updateStepRing(currentSteps, goalSteps);
+
+    // Prefill goal input
+    const stepGoalInput = document.getElementById("stepGoal");
+    if (stepGoalInput) {
+        stepGoalInput.value = goalSteps;
+    }
+
+    // Set new goal on button click
+    const setGoalBtn = document.getElementById("btn-set-goal");
+    if (setGoalBtn) {
+        setGoalBtn.addEventListener("click", () => {
+            const newGoal = parseInt(stepGoalInput.value);
+            if (!isNaN(newGoal) && newGoal > 0) {
+                goalSteps = newGoal;
+                localStorage.setItem("goalSteps", goalSteps);
+                updateStepRing(currentSteps, goalSteps);
+                if (goalValue) {
+                    goalValue.textContent = `Goal: ${goalSteps}`;
+                }
+                alert("Step goal updated successfully!");
+            } else {
+                alert("Please enter a valid step goal.");
+            }
+        })
+    }
+
 
 });
 
@@ -140,6 +164,19 @@ function getCaloriesBurned(type, duration, weight = 60) {
     // Formula: Calories = MET × weight (kg) × time (hrs)
     const calories = met * weight * hours;
     return Math.round(calories);
+}
+
+function updateStepRing(currentSteps, goalSteps) {
+  const percent = currentSteps / goalSteps;
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - percent);
+
+  const progressCircle = document.querySelector('.streak-progress');
+  progressCircle.style.strokeDasharray = `${circumference}`;
+  progressCircle.style.strokeDashoffset = `${offset}`;
+
+  document.getElementById('stepCount').textContent = currentSteps.toLocaleString();
 }
 
 // Log out

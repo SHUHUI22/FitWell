@@ -42,14 +42,14 @@ main{
     font-size: 1rem;
 }
 
-#btn_record{
+#btn_record, #btn-set-goal{
     background-color: #123524;
     color: white;
     font-weight: bold;
     margin: 20px 0 10px;
 }
 
-#btn_record:hover{
+#btn_record:hover, #btn-set-goal:hover{
     background-color: #3E7B27;
 }
 
@@ -77,6 +77,23 @@ main{
   color: #000000;
   font-size: 1.1rem;
 }
+
+#stepGoal {
+    width: 100%;
+    max-width: 250px;
+    background-color: #E4EFE7;
+    border-radius: 8px;
+    border: none;
+    padding: 6px 12px;
+    box-shadow: 0px 2px 5px #95be86;
+}
+
+.step-goal {
+    font-size: 0.8rem;
+    margin-top: -2px;
+    color: #3E7B27;
+}
+
 
 .current-step{
     font-size: 1.9rem;
