@@ -67,9 +67,11 @@ main{
 
 .summary_content {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
     text-align: center;
+    gap: 20px;
 }
 
 .summary-icon i,

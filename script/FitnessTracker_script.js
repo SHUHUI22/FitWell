@@ -112,10 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (goalValue) {
     goalValue.textContent = `Goal: ${goalSteps}`;
     }
-
     // Example step count
     const currentSteps = 6800;
-
     // Update text
     document.getElementById('stepCount').textContent = currentSteps.toLocaleString();
     updateStepRing(currentSteps, goalSteps);
