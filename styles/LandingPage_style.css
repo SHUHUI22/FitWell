@@ -167,5 +167,5 @@
 
 .btn_feature:active {
     background-color: #04AA6D; 
-    box-shadow: 0 0 8px rgba(0,0,0,0.2); /* Optional: Add shadow effect on click */
+    box-shadow: 0 0 8px rgba(0,0,0,0.2); 
 }

@@ -11,7 +11,7 @@ btn_signup.addEventListener("click", function(){
 });
 
 btn_get_started.addEventListener("click", function(){
-    window.location.href = "Login.html";
+    window.location.href = "SignUp.html";
 });
 
 // Landing Page after logged in
@@ -87,12 +87,22 @@ window.addEventListener('scroll', function() {
   
 // Log out
 const btn_logout = document.querySelector("#btn_logout");
-btn_logout.addEventListener("click",logout);
+btn_logout.addEventListener("click", logout);
 
 function logout() {
+    // Retain the 'mealFavourites' in localStorage, clear other data
+    const favourites = localStorage.getItem('mealFavourites');
+
+    // Clear all other data in localStorage
     localStorage.clear();
-    setTimeout(function() {
+
+    // Restore the 'mealFavourites' back to localStorage
+    if (favourites) {
+        localStorage.setItem('mealFavourites', favourites);
+    }
+
+    // Redirect after a slight delay
+    setTimeout(function () {
         window.location.href = "Login.html";
-    }, 500); 
+    }, 500);
 }
-  

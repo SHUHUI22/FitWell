@@ -58,6 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Add viewBox attribute to SVG
+    const streakRing = document.querySelector(".streak-ring");
+    if (streakRing) {
+        streakRing.setAttribute("viewBox", "0 0 200 200");
+        streakRing.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    }
+
     // Streak Progress Circle
     const currentStreak = 20;
     const goal = 31;
@@ -67,6 +74,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const offset = 565.5 - (565.5 * currentStreak) / goal; // 565.5 = 2 * π * 90 (the circle radius)
         circle.style.strokeDashoffset = offset;
     }
+
+    // Initialize streak ring
+    initializeStreakRing();
 
     // Initialize workout duration bar chart
     initializeDurationChart();
@@ -83,6 +93,64 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize weight progress chart
     initializeWeightProgressChart();
 });
+
+// Function to initialize and update streak ring
+function initializeStreakRing() {
+    const currentStreak = 20;
+    const goal = 31;
+    
+    const svgRing = document.querySelector(".streak-ring");
+    const progress = document.querySelector(".streak-progress");
+    
+    if (svgRing && progress) {
+        // Ensure viewBox is set correctly
+        svgRing.setAttribute("viewBox", "0 0 200 200");
+        svgRing.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        
+        // Calculate circumference - 2πr where r=90
+        const radius = 90;
+        const circumference = 2 * Math.PI * radius;
+        
+        // Calculate progress offset
+        const offset = circumference - (circumference * currentStreak / goal);
+        
+        // Set attributes
+        progress.setAttribute("stroke-dasharray", circumference);
+        progress.setAttribute("stroke-dashoffset", offset);
+        
+        console.log("Streak ring initialized. Circumference:", circumference, "Offset:", offset);
+    }
+}
+
+// Handle window resizing
+window.addEventListener('resize', handleResponsiveLayout);
+window.addEventListener('zoom', handleResponsiveLayout); // Some browsers support zoom events
+
+// Called on window resize or zoom change
+function handleResponsiveLayout() {
+    // Reinitialize streak ring
+    initializeStreakRing();
+    
+    // Check zoom level and make any necessary adjustments
+    const zoomLevel = Math.round(window.devicePixelRatio * 100);
+    console.log("Current zoom level:", zoomLevel + "%");
+    
+    // Make additional adjustments based on zoom level if needed
+    const streakWrapper = document.querySelector(".streak-wrapper");
+    if (streakWrapper) {
+        // At very high zoom levels, check if we need additional scaling
+        if (zoomLevel > 200) {
+            streakWrapper.style.transform = "scale(0.85)";
+        } else if (zoomLevel > 150) {
+            streakWrapper.style.transform = "scale(0.9)";
+        } else {
+            streakWrapper.style.transform = "";
+        }
+    }
+}
+
+// Call once on load to handle initial state
+setTimeout(handleResponsiveLayout, 100);
 
 //Funtion to initialize the duration bar chart
 function initializeDurationChart() {
@@ -105,6 +173,7 @@ new Chart(durationCtx, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true,
@@ -163,6 +232,7 @@ function initializeCaloriesChart() {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true, // Ensures the Y-axis starts at 0
@@ -291,7 +361,7 @@ function updateBMIIndicator(bmi) {
   const bmi = parseFloat(document.getElementById('bmi-value').textContent);
   updateBMIIndicator(bmi);
   
-  // Optional: Recalculate on window resize
+  // Recalculate on window resize
   window.addEventListener('resize', () => updateBMIIndicator(bmi));
   
 
@@ -358,6 +428,7 @@ new Chart(ctx, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -378,11 +449,22 @@ new Chart(ctx, {
 
 // Logout functionality
 const btn_logout = document.querySelector("#btn_logout");
-if (btn_logout) {
-    btn_logout.addEventListener("click", function () {
-        localStorage.clear();
-        setTimeout(function () {
-            window.location.href = "Login.html";
-        }, 500);
-    });
+btn_logout.addEventListener("click", logout);
+
+function logout() {
+    // Retain the 'mealFavourites' in localStorage, clear other data
+    const favourites = localStorage.getItem('mealFavourites');
+
+    // Clear all other data in localStorage
+    localStorage.clear();
+
+    // Restore the 'mealFavourites' back to localStorage
+    if (favourites) {
+        localStorage.setItem('mealFavourites', favourites);
+    }
+
+    // Redirect after a slight delay
+    setTimeout(function () {
+        window.location.href = "Login.html";
+    }, 500);
 }
