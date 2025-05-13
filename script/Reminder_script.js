@@ -50,14 +50,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = reminder.querySelector('.reminder-text').innerText;
         const datetimeText = reminder.querySelector('.reminder-time').innerText;
         const repeatText = datetimeText.split('-')[1].trim();
-        const [dateTimePart] = datetimeText.split('at');
-        const date = new Date(dateTimePart.trim());
-        const formattedDate = date.toISOString().split('T')[0];
-
-        // Extract time and convert to 24-hour
-        const rawTime = datetimeText.split('at')[1].split('-')[0].trim();
-        let [timePart, ampm] = rawTime.split(' ');
-        let [hours, minutes] = timePart.split(':').map(Number);
+        
+        // Parse the date string from the displayed text
+        const [datePart, timePart] = datetimeText.split('at').map(part => part.trim());
+        const timeValue = timePart.split('-')[0].trim();
+        
+        // Parse the date using the displayed format
+        const dateObj = new Date(datePart);
+        
+        // Format the date for the input field in YYYY-MM-DD format
+        // Use local date to prevent timezone issues
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        
+        // Extract time and convert to 24-hour format
+        let [timeString, ampm] = timeValue.split(' ');
+        let [hours, minutes] = timeString.split(':').map(Number);
         if (ampm === 'PM' && hours < 12) hours += 12;
         if (ampm === 'AM' && hours === 12) hours = 0;
         const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
@@ -92,13 +102,25 @@ document.addEventListener('DOMContentLoaded', function () {
         const time = document.getElementById('editTime').value;
         const repeat = document.getElementById('editRepeat').value;
 
-        const dateObj = new Date(`${date}T${time}`);
+        // Create a date object preserving the input date
+        const [year, month, day] = date.split('-').map(Number);
+        const [hours, minutes] = time.split(':').map(Number);
+        
+        // Create date object using local components to prevent timezone issues
+        const dateObj = new Date(year, month - 1, day, hours, minutes);
+        
+        // Format the date in a locale-friendly way
         const formattedDate = dateObj.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
-    });
-        const formattedTime = dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        });
+        
+        // Format the time
+        const formattedTime = dateObj.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit' 
+        });
 
         // Update reminder display
         reminder.querySelector('.reminder-text').textContent = title;
