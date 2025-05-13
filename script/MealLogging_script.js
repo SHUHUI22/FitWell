@@ -1,5 +1,5 @@
 // spoonacular API key 
-const apiKey = "API_KEY";
+const apiKey = "ec2038346da449b89a58e0be5dee7ec3";
 
 // Set today's date 
 const today = new Date().toISOString().split('T')[0];
