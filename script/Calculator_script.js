@@ -1,5 +1,5 @@
 // spoonacular API key 
-const apiKey = "API_KEY";
+const apiKey = "ec2038346da449b89a58e0be5dee7ec3";
 
 const btn_analyze = document.getElementById("btn-analyze")
 btn_analyze.addEventListener("click", getNutrition);
