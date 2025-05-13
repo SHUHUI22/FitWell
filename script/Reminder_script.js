@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const category = reminder.querySelector('.category-tag').textContent;
         const categorySelect = document.getElementById('editCategory');
         categorySelect.value = category;  // Set category value
-        categorySelect.disabled = true;  // Disable category dropdown
+        // categorySelect.disabled = true;  // Disable category dropdown
 
         const editModal = new bootstrap.Modal(document.getElementById('editModal'));
         editModal.show();
