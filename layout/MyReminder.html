@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FitWell - Reminder</title>
 
   <!-- Bootstrap CSS -->
@@ -10,100 +11,69 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- External CSS -->
+  <link rel="stylesheet" href="/styles/index.css" />
   <link rel="stylesheet" href="../styles/MyReminder_styles.css" />
+
 </head>
+
 <body>
-   <!-- Navigation Bar -->
-   <nav class="navbar navbar-expand-sm py-1 px-4">
-    <div
-      class="container-fluid d-flex align-items-center justify-content-between"
-    >
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-sm py-1 px-4">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
       <!-- Web name and logo-->
-      <a
-        href="/layout/LandingPage.html"
-        class="web_name navbar-brand fw-bold d-flex align-items-center"
-      >
+      <a href="/layout/LandingPage.html" class="web_name navbar-brand fw-bold d-flex align-items-center">
         <img src="/images/logo.png" width="50px" height="50px" class="me-1" />
         FitWell
       </a>
 
       <!-- Display hamburger icon when the screen is small-->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <!-- Nav items-->
       <div class="collapse navbar-collapse navbar-collapse" id="navbarText">
-        <ul
-          class="navbar-nav text-nowrap ms-auto d-flex justify-content-evenly w-100"
-        >
+        <ul class="navbar-nav text-nowrap ms-auto d-flex justify-content-evenly w-100">
           <li class="nav-item" id="nav_home">
-            <a href="/layout/LandingPage.html#home" class="nav-link fw-bold"
-              >Home</a
-            >
+            <a href="/layout/LandingPage.html#home" class="nav-link fw-bold">Home</a>
           </li>
 
           <li class="nav-item" id="nav_aboutUs">
-            <a
-              href="/layout/LandingPage.html#aboutUs"
-              class="nav-link fw-bold"
-              >About Us</a
-            >
+            <a href="/layout/LandingPage.html#aboutUs" class="nav-link fw-bold">About Us</a>
           </li>
 
           <li class="nav-item" id="nav_features">
-            <a
-              href="/layout/LandingPage.html#features"
-              class="nav-link fw-bold"
-              >Features</a
-            >
+            <a href="/layout/LandingPage.html#features" class="nav-link fw-bold">Features</a>
           </li>
 
           <li class="nav-item" id="nav_tracker">
-            <a href="" class="nav-link fw-bold">Fitness Tracker</a>
+            <a href="/layout/FitnessTracker.html" class="nav-link fw-bold">Fitness Tracker</a>
           </li>
 
           <li class="nav-item" id="nav_progress">
-            <a href="" class="nav-link fw-bold"
-              >Progress Chart</a
-            >
+            <a href="/layout/ProgressChart.html" class="nav-link fw-bold">Progress Chart</a>
           </li>
 
           <li class="nav-item" id="nav_nutrition">
-            <a href="" class="nav-link fw-bold">Nutrition Planner</a>
+            <a href="/layout/NutritionPlanner.html" class="nav-link fw-bold">Nutrition Planner</a>
           </li>
 
           <li class="nav-item" id="nav_reminder">
-            <a href="/layout/CreateReminder.html" class="nav-link fw-bold" >Reminder</a>
+            <a href="/layout/CreateReminder.html" class="nav-link fw-bold">Reminder</a>
           </li>
 
           <li class="nav-item dropdown" id="nav_profile">
-            <a
-              href="#"
-              class="nav-link dropdown-toggle fw-bold"
-              role="button"
-              data-bs-toggle="dropdown"
-            >
+            <a href="#" class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown">
               <i class="fas fa-user-circle"></i>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item fw-bold" href="">Profile</a></li>
-              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item fw-bold" href="/layout/Profile.html">Profile</a></li>
               <li>
-                <a
-                  class="dropdown-item fw-bold"
-                  href="/layout/LandingPage.html#logout"
-                  id="btn_logout"
-                  >Log Out</a
-                >
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item fw-bold" href="/layout/LandingPage.html#logout" id="btn_logout">Log Out</a>
               </li>
             </ul>
           </li>
@@ -111,7 +81,7 @@
       </div>
     </div>
   </nav>
-
+  
  <!-- Tab navigation -->
  <div class="tab-container">
   <a href="CreateReminder.html" class="tab">Create Reminder</a>
