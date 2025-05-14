@@ -91,7 +91,7 @@ activityData.forEach((activity, index) => {
     newSaveBtn.addEventListener("click", () => {
       const newDetail = detailInput.value;
       const newTime = timeInput.value;
-      const weight = 60;
+      const weight = parseInt(localStorage.getItem('userWeight'));
       const duration = parseFloat(newTime.replace(/[^\d.]/g, ""));
 
       currentActivity.detail = newDetail;
@@ -197,10 +197,11 @@ function getCaloriesBurned(type, duration, weight) {
     zumba: 4.5
   };
 
-  const met = MET_VALUES[type] || 5;
-  const hours = duration / 60;
+  const met = MET_VALUES[type]
+  const time = duration;
 
-  const calories = met * weight * hours;
+  // Formula: Calories = Time (min) x MET × 3.5 weight (kg) / 200
+  const calories = (time * met * 3.5 * weight) / 200;
   return Math.round(calories);
 }
 

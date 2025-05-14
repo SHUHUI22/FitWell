@@ -146,7 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-function getCaloriesBurned(type, duration, weight = 60) {
+const weight = parseInt(localStorage.getItem('userWeight'));
+function getCaloriesBurned(type, duration, weight) {
     // MET values for each workout type (approximate)
     const MET_VALUES = {
         cycling: 9.5,
@@ -156,11 +157,11 @@ function getCaloriesBurned(type, duration, weight = 60) {
         zumba: 4.5
     };
 
-    const met = MET_VALUES[type] || 5; // default MET if unknown type
-    const hours = duration / 60;
+    const met = MET_VALUES[type]; 
+    const time = duration;
 
-    // Formula: Calories = MET × weight (kg) × time (hrs)
-    const calories = met * weight * hours;
+    // Formula: Calories = Time (min) x MET × 3.5 weight (kg) / 200
+    const calories = (time * met * 3.5 * weight) / 200;
     return Math.round(calories);
 }
 
