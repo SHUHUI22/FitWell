@@ -1,4 +1,71 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // User login and logout logic
+    const isLoggedIn = localStorage.getItem("loggedIn");
+
+    if (isLoggedIn === "true") {
+        handleLoggedInState();
+    }
+
+    // Handle logged-in state UI changes
+    function handleLoggedInState() {
+        document.body.classList.add("logged-in");
+
+        const showIds = [
+            "nav_tracker", "nav_nutrition", "nav_progress", "nav_reminder", "nav_profile",
+            "quicklink_tracker", "quicklink_progress", "quicklink_nutrition", "quicklink_reminder"
+        ];
+        showIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove("d-none");
+        });
+
+        const btn_login = document.querySelector("#btn_login");
+        const btn_signup = document.querySelector("#btn_signup");
+        const btn_get_started = document.querySelector("#btn_get_started");
+
+        if (btn_login) btn_login.classList.add("d-none");
+        if (btn_signup) btn_signup.classList.add("d-none");
+        if (btn_get_started) btn_get_started.classList.add("d-none");
+
+        const buttons = document.querySelectorAll(".btn_feature");
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                const card = button.closest(".card");
+                const link = card.getAttribute("data-link");
+                if (link) {
+                    window.location.href = link;
+                }
+            });
+        });
+    }
+
+    // Highlight the active page in the navigation
+    const currentPage = window.location.pathname.split("/").pop();
+    const navLinks = document.querySelector("#nav_reminder a");
+
+    const isReminderPage = currentPage === "CreateReminder.html" || currentPage === "MyReminder.html";
+    console.log(currentPage)
+    if (isReminderPage && navLinks) {
+        navLinks.classList.add("active");
+    }
+
+    // Logout functionality
+    const btn_logout = document.querySelector("#btn_logout");
+    if (btn_logout) {
+        btn_logout.addEventListener("click", logout);
+    }
+
+    function logout() {
+        const favorites = localStorage.getItem('mealFavourites');
+        localStorage.clear();
+        if (favorites) {
+            localStorage.setItem('mealFavourites', favorites);
+        }
+        setTimeout(() => {
+            window.location.href = "Login.html";
+        }, 500);
+    }
+    
     // DOM elements for reminders list and empty state
     const remindersList = document.querySelector('#reminder-list');
     const emptyState = document.querySelector('#empty-state');
@@ -128,71 +195,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
         reminderToEdit = null;
-    }
-
-    // User login and logout logic
-    const isLoggedIn = localStorage.getItem("loggedIn");
-
-    if (isLoggedIn === "true") {
-        handleLoggedInState();
-    }
-
-    // Handle logged-in state UI changes
-    function handleLoggedInState() {
-        document.body.classList.add("logged-in");
-
-        const showIds = [
-            "nav_tracker", "nav_nutrition", "nav_progress", "nav_reminder", "nav_profile",
-            "quicklink_tracker", "quicklink_progress", "quicklink_nutrition", "quicklink_reminder"
-        ];
-        showIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.remove("d-none");
-        });
-
-        const btn_login = document.querySelector("#btn_login");
-        const btn_signup = document.querySelector("#btn_signup");
-        const btn_get_started = document.querySelector("#btn_get_started");
-
-        if (btn_login) btn_login.classList.add("d-none");
-        if (btn_signup) btn_signup.classList.add("d-none");
-        if (btn_get_started) btn_get_started.classList.add("d-none");
-
-        const buttons = document.querySelectorAll(".btn_feature");
-        buttons.forEach(button => {
-            button.addEventListener("click", function () {
-                const card = button.closest(".card");
-                const link = card.getAttribute("data-link");
-                if (link) {
-                    window.location.href = link;
-                }
-            });
-        });
-    }
-
-    // Highlight the active page in the navigation
-    const currentPage = window.location.pathname.split("/").pop();
-    const navLinks = document.querySelector("#nav_reminder a");
-
-    const isReminderPage = currentPage === "CreateReminder.html" || currentPage === "MyReminder.html";
-    if (isReminderPage && navLinks) {
-        navLinks.classList.add("active");
-    }
-
-    // Logout functionality
-    const btn_logout = document.querySelector("#btn_logout");
-    if (btn_logout) {
-        btn_logout.addEventListener("click", logout);
-    }
-
-    function logout() {
-        const favorites = localStorage.getItem('mealFavourites');
-        localStorage.clear();
-        if (favorites) {
-            localStorage.setItem('mealFavourites', favorites);
-        }
-        setTimeout(() => {
-            window.location.href = "Login.html";
-        }, 500);
     }
 });

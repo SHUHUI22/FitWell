@@ -1,5 +1,5 @@
 // spoonacular API key 
-const apiKey = "ec2038346da449b89a58e0be5dee7ec3";
+const apiKey = "931113120c0c4a369daaa8e9bf92f571";
 
 function showInstructionMessage() {
   const resultsContainer = document.getElementById("search-result");
@@ -51,7 +51,7 @@ async function searchMeal() {
   }
   try {
     // Call Spoonacular API to search for recipes
-    const searchRes = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}${filterParams}&number=5&addRecipeNutrition=true&apiKey=${apiKey}`);
+    const searchRes = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}${filterParams}&number=10&addRecipeNutrition=true&apiKey=${apiKey}`);
     const searchData = await searchRes.json();
 
     // Clear loading message
