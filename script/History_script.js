@@ -6,14 +6,14 @@ const activityData = [
     type: "Cycling",
     detail: "15.2 km",
     time: "45 min",
-    calories: "428 kcal"
+    calories: "411 kcal"
   },
   {
     date: "15 Apr",
     type: "Yoga",
     detail: "Vinyasa",
     time: "30 min",
-    calories: "90 kcal"
+    calories: "87 kcal"
   }
 ];
 
@@ -35,12 +35,12 @@ activityData.forEach((activity, index) => {
     currentDate = activity.date;
   }
 
-  //Create Activity Card
+  // //Create Activity Card
   const activityCard = document.createElement("div");
-  activityCard.className = "mb-3 p-3 border rounded d-flex align-items-center justify-content-between flex-wrap history-card";
+  activityCard.className = "container mb-3 p-3 border rounded d-flex align-items-center justify-content-between flex-wrap history-card";
 
   activityCard.innerHTML = `
-    <div class="d-flex align-items-center gap-3 flex-wrap">
+    <div class="d-flex align-items-center gap-3">
       <i class="fas fa-${getIcon(activity.type)} me-3 fs-4"></i>
       <div><strong>${activity.type}</strong></div>
       <i class="fas ${getDetailIcon(activity.type)}"></i>
@@ -48,7 +48,7 @@ activityData.forEach((activity, index) => {
       <i class="fas fa-stopwatch"></i> <span class="time">${activity.time}</span>
       <i class="fas fa-fire"></i> <span class="calories">${activity.calories}</span>
     </div>
-    <div class="d-flex">
+    <div class="d-flex justify-content-center mx-auto mx-lg-0 mt-2 mt-lg-0">
       <button class="btn btn-outline-success btn-sm me-2 btn-edit">
         <i class="fas fa-pen"></i>
       </button>
@@ -91,7 +91,7 @@ activityData.forEach((activity, index) => {
     newSaveBtn.addEventListener("click", () => {
       const newDetail = detailInput.value;
       const newTime = timeInput.value;
-      const weight = 60;
+      const weight = parseInt(localStorage.getItem('userWeight')) || "55";
       const duration = parseFloat(newTime.replace(/[^\d.]/g, ""));
 
       currentActivity.detail = newDetail;
@@ -197,10 +197,11 @@ function getCaloriesBurned(type, duration, weight) {
     zumba: 4.5
   };
 
-  const met = MET_VALUES[type] || 5;
-  const hours = duration / 60;
+  const met = MET_VALUES[type]
+  const time = duration;
 
-  const calories = met * weight * hours;
+  // Formula: Calories = Time (min) x MET × 3.5 weight (kg) / 200
+  const calories = (time * met * 3.5 * weight) / 200;
   return Math.round(calories);
 }
 

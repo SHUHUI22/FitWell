@@ -102,7 +102,9 @@
                     </div>
 
                     <div>
-                         <button id="btn_record" form="logWorkout_form" class="btn btn-lg px-5 mx-auto d-block border border-2 rounded-pill">Record</button>
+                         <button id="btn_record" form="logWorkout_form" 
+                         class="btn btn-lg px-5 mx-auto d-block border border-2 rounded-pill">
+                         Record</button>
                     </div>   
                     </form>
                     </section>
@@ -111,7 +113,7 @@
                 <div class="col-md-7">
                     <div class="row px-4">
                          <div class="col-md-12">
-                         <!-- Today's Summary -->
+                             <!-- Today's Summary -->
                              <section id="todaySummary" class="container my-4">
                              <h2 class="fw-bold mb-4">Today's Summary</h2>
                              <div class="summary_content">
@@ -119,7 +121,8 @@
                             <!--Circular Steps Ring-->
                             <div class="streak-container position-relative">
                                 <svg class="streak-ring" width="140" height="140">
-                                  <circle class="streak-bg" cx="70" cy="70" r="60" stroke="#99BC85" stroke-width="12" fill="none"/>
+                                  <circle class="streak-bg" cx="70" cy="70" r="60" 
+                                  stroke="#99BC85" stroke-width="12" fill="none"/>
                                   <circle class="streak-progress" cx="70" cy="70" r="60"
                                   stroke="#123524" stroke-width="12" fill="none"
                                   stroke-linecap="round"
@@ -129,11 +132,11 @@
                                 <!-- Center content -->
                                 <div class="streak-content position-absolute top-50 start-50 translate-middle text-center">
                                     <p id="stepCount" class="current-step fw-bold mt-2 mb-1">6800</p>
-                                    <large class="large text-muted mt-2">steps</large>
+                                    <large class="large text-muted mt-1">steps</large>
+                                    <div class="step-goal text-muted mb-2" id="goalValue">Goal : 10000</div>
                                 </div>
                             </div>    
                                   
-                            <!-- JS will inject items here -->
                             <div class="d-flex flex-column mt-2 pe-5 me-4">                      
                                 <div class="row-md-4">
                                     <div class="summary-icon mb-3">
@@ -150,9 +153,13 @@
                                         <i class="fas fa-stopwatch me-2"></i> <span>40 min</span>
                                     </div>
                                 </div>                             
+                            </div> 
+                            <div class="mt-4">
+                                <label for="stepGoal" class="form-label fw-semibold">Daily Step Goal</label>
+                                <input id="stepGoal" type="number" class="form-control" placeholder="Enter your step goal (e.g., 10000)" min="1000"/>
+                                <button id="btn-set-goal" class="btn btn-lg px-5 mx-auto d-block border border-2 rounded-pill">Set Goal</button>
+                            </div>                        
                             </div>
-                            
-                             </div>
                             </section>
                          <div class="col-md-12 mt-4">
                              <!-- Activity History -->
@@ -163,7 +170,6 @@
                                 </a></h2>
                                            
                              <div class="history-item">
-                                <!-- JS will inject rows here -->
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-person-biking history-icon"></i>
                                     <div>16 Apr <br> Cycle</div>   
@@ -171,7 +177,7 @@
                                 <bigger class="fw-bold align-items-center">15.2 km</bigger>
                                 <div class="text-end">
                                   <div>45 min</div>
-                                  <div>428 kcal</div>
+                                  <div>411 kcal</div>
                                 </div>
                               </div>
                               <div class="history-item">
@@ -182,7 +188,7 @@
                                 <bigger class="fw-bold align-items-center">Vinyasa</bigger>
                                 <div class="text-end">
                                   <div>30 min</div>
-                                  <div>90 kcal</div>
+                                  <div>87 kcal</div>
                                 </div>
                              </section>
                         </div>
