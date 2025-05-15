@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-const weight = parseInt(localStorage.getItem('userWeight'));
+const weight = parseInt(localStorage.getItem('userWeight'))  || "55";
 function getCaloriesBurned(type, duration, weight) {
     // MET values for each workout type (approximate)
     const MET_VALUES = {
