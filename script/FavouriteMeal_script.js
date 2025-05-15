@@ -67,17 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
 // Load favourites page and display full information
 function loadFavourites() {
     const favouritesContainer = document.getElementById('favourites-container');
+    favouritesContainer.innerHTML = ""; // ✅ Always clear the container
 
-    if (favourites.length != 0) {
-        favouritesContainer.innerHTML = "";
+    if (favourites.length !== 0) {
         favourites.forEach((fav, index) => {
             const col = document.createElement("div");
-            col.classList.add("col-sm-4", "mb-4"); // Responsive column layout
+            col.classList.add("col-sm-4", "mb-4");
 
             const favCard = document.createElement("div");
             favCard.classList.add("card");
 
-            // Create the card structure
             favCard.innerHTML = `
             <div class="card-body d-flex flex-column justify-content-between align-items-center">
                 <img src="${fav.image}" alt="${fav.title}" class="card-img-top">
@@ -87,12 +86,18 @@ function loadFavourites() {
             </div>
             `;
 
-            // Add event to open modal with full recipe steps when the card is clicked
-            favCard.addEventListener('click', () => showMealModal(fav, index)); // Add click event to show recipe steps
-
-            // Append the card to the container
-            favouritesContainer.appendChild(favCard);
+            favCard.addEventListener('click', () => showMealModal(fav, index));
+            favouritesContainer.appendChild(col);
+            col.appendChild(favCard);
         });
+    } else {
+        favouritesContainer.innerHTML = `
+            <div class="d-flex flex-column justify-content-center align-items-center bg-white rounded rounded-5">
+                    <img class="img-fluid" src="/images/favourite.png" alt="Favourite illustration">
+                    <p class="text-muted">You haven't added any favorites yet. You may search for a meal and click
+                        <strong>"Add to Favourites"</strong> to save it.</p>
+            </div>
+        `;
     }
 }
 
